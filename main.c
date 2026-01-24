@@ -2,6 +2,11 @@
 //Class: CPTS 360
 //Assignment: PA2 Cache simulator
 
+//Program takes in "addresses" in input_sequence.txt, each item represents
+//one byte in memory. Addresses are accessed one at a time, simulating access of cache blocks
+//Program outputs statistics of total accesses, cache hit/misses, and hit rate
+//Hardware specifics/cache configuration hard coded in program. 
+
 //This text file contains the main program, all user defined functions in header.h and functions.c
 #include "header.h"
 
