@@ -11,11 +11,12 @@
 #include "header.h"
 
 int main(int argc, char* argv[]) {
-    if (argc != 4) {
+    if (argc != 4) {  //insufficient command line args
         printf("Usage: %s <cache_size> <block_size> <input_file>\n", argv[0]);
         return 1;
     }
 
+    //cache config args
     int cache_size = atoi(argv[1]);   // in bits
     int block_size = atoi(argv[2]);   // in bits
     char* filename = argv[3];
@@ -26,25 +27,26 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    FILE* fp = fopen(filename, "r");
-    if (fp == NULL) {
+    FILE* fp = fopen(filename, "r"); //create file pointer to command arg
+    if (fp == NULL) { //check valid file open
         printf("Error opening input file\n");
         free_cache(cache);
         return 1;
     }
 
-    unsigned int address;
+    unsigned int address; //store hex conversion of address from txt
+    //variables for stats
     int accesses = 0;
     int hits = 0;
     int misses = 0;
 
     /* Read memory addresses from file */
-    while (fscanf(fp, "%x", &address) == 1) {
+    while (fscanf(fp, "%x", &address) == 1) { //stores hex of address
         accesses++;
-        if (access_cache(cache, address)) {
+        if (access_cache(cache, address)) { //if cache contains address
             hits++;
         }
-        else {
+        else { //cache does not contain address
             misses++;
         }
     }

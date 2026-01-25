@@ -4,7 +4,7 @@
 #include "header.h"
 
 /*
- * Creates and initializes a cache
+ * Creates and initializes a cache struct, made up of multiple cache lines
  */
 Cache* create_cache(int cache_size, int block_size) {
     Cache* cache = (Cache*)malloc(sizeof(Cache));
@@ -12,17 +12,23 @@ Cache* create_cache(int cache_size, int block_size) {
         return NULL;
     }
 
-    cache->block_size = block_size;
-    cache->num_lines = cache_size / block_size;
+    cache->block_size = block_size; //block size according to input args
+    cache->num_lines = cache_size / block_size; //lines dependent on cache and block sizes
 
+    //allocate memory for array of lines
     cache->lines = (CacheLine*)malloc(sizeof(CacheLine) * cache->num_lines);
+
+    //check for proper allocation
     if (cache->lines == NULL) {
-        free(cache);
+        free(cache); //free memory if failed
         return NULL;
     }
 
-    /* TODO: Initialize cache lines (valid bits and tags) */
-
+    //Initialize cache lines as empty
+    for(int i = 0; i< cache->num_lines; i++){
+        cache->lines[i].valid = 0;
+        cache->lines[i].tag = 0;
+    }
     return cache;
 }
 
