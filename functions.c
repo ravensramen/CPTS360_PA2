@@ -37,6 +37,8 @@ Cache* create_cache(int cache_size, int block_size) {
  * Returns 1 for hit, 0 for miss
  */
 int access_cache(Cache* cache, unsigned int address) {
+
+    //simulate direct mapped cache
     /* TODO:
      * 1. Compute block address
      * 2. Compute index
@@ -44,6 +46,26 @@ int access_cache(Cache* cache, unsigned int address) {
      * 4. Check for hit or miss
      * 5. Update cache line on miss
      */
+
+    //block address (determines which line of cache block) - (tag - line ID - word ID)
+
+    //check for hit or miss (does word ID == address word ID), if not match -> go to main memory (miss)
+
+    int wordBits = 0, indexBits=0; //variable to store word and index bits
+
+    //get each component from cache
+    wordBits = log2(cache->block_size); //log2(block size) bits required to store each word
+    indexBits = log2(cache->num_lines);
+
+    int index = (address >> wordBits) & ((1<<indexBits) -1); //shift based on offset? where address is 
+    int tag = address >> (wordBits + indexBits); //distinguishes different blocks?
+
+    //check for a hit (is index valid, do the tags for match ?)
+    //return 1 if hit
+
+    //check for miss, update line
+    //update line as valid -> store new item from address (?)
+
 
     return 0;  // placeholder
 }

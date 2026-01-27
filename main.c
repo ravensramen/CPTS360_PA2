@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
     /* Read memory addresses from file */
     while (fscanf(fp, "%x", &address) == 1) { //stores hex of address
         accesses++;
-        if (access_cache(cache, address)) { //if cache contains address
+        if (access_cache(cache, address)) { //determine if cache contains target address 
             hits++;
         }
         else { //cache does not contain address
