@@ -41,12 +41,12 @@ int main(int argc, char* argv[]) {
     int misses = 0;
 
     /* Read memory addresses from file */
-    while (fscanf(fp, "%x", &address) == 1) { //stores hex of address
-        accesses++;
-        if (access_cache(cache, address)) { //determine if cache contains target address 
-            hits++;
+    while (fscanf(fp, "%x", &address) == 1) { //simulate loop to search for each memory address in cache
+        accesses++; //increment accesses for stats
+        if (access_cache(cache, address)) { //search for address in current cache
+            hits++; //if access_cache returned 1 -> hit
         }
-        else { //cache does not contain address
+        else { //cache does not contain address, another load 
             misses++;
         }
     }

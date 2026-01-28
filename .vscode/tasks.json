@@ -9,7 +9,8 @@
                 "-g",
                 "*.c",
                 "-o",
-                "myproject"
+                "myproject",
+                "-lm"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
