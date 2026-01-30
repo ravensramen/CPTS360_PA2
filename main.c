@@ -17,8 +17,8 @@ int main(int argc, char* argv[]) {
     }
 
     //cache config args
-    int cache_size = atoi(argv[1]);   // in bits
-    int block_size = atoi(argv[2]);   // in bits
+    int cache_size = atoi(argv[1]);   // total cache size
+    int block_size = atoi(argv[2]);   // size of each cache block/line
     char* filename = argv[3];
 
     Cache* cache = create_cache(cache_size, block_size);
@@ -41,7 +41,10 @@ int main(int argc, char* argv[]) {
     int misses = 0;
 
     /* Read memory addresses from file */
-    while (fscanf(fp, "%x", &address) == 1) { //simulate loop to search for each memory address in cache
+    while (fscanf(fp, "%d", &address) == 1) { //simulate loop to search for each memory address in cache
+        
+        printf("%d ", address); //for debugging
+
         accesses++; //increment accesses for stats
         if (access_cache(cache, address)) { //search for address in current cache
             hits++; //if access_cache returned 1 -> hit

@@ -38,25 +38,25 @@ Cache* create_cache(int cache_size, int block_size) {
  */
 int access_cache(Cache* cache, unsigned int address) {
 
-    int wordBits = 0, indexBits=0; //variable to store word and index bits
+    int wordBits = 0, indexBits=0; 
 
-    //get each component from cache
-    wordBits = log2(cache->block_size); //log2(block size) bits required to store each word
-    indexBits = log2(cache->num_lines);
+    //get word and index bits according to cache size 
+    wordBits = log2(cache->block_size); 
+    indexBits = log2(cache->num_lines); 
 
 
-    int index = (address >> wordBits) & ((1<<indexBits) -1); //shift based on offset? where address is 
-    int tag = address >> (wordBits + indexBits); //distinguishes different blocks?
+    int index = (address >> wordBits) & ((1<<indexBits) -1); //remove block offset -> get just tag and index values
+    int tag = address >> (wordBits + indexBits); //extract tag (find where in memory to check for address)
 
-    //check for a hit (is index valid, do the tags for match ?)
-    if (cache->lines[index].valid && cache->lines[index].tag == tag){ //if valid tag is true and tag matches target tag
-        return 1; //return 1 coresponding to a hit
+    //check for a hit 
+    if (cache->lines[index].valid && cache->lines[index].tag == tag){ //if valid (line has been used before) and tag matches block
+        return 1; //hit
     }
 
     //If not a match, update the cache with the new load
     cache->lines[index].valid = 1;
-    cache->lines[index].tag = tag;
-    return 0; //if miss, return 0
+    cache->lines[index].tag = tag; //simulate loading a new block
+    return 0; //denote miss
 }
 
 /*
