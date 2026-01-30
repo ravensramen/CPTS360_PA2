@@ -2,18 +2,14 @@
 
 Sydnee Boothby 01/29
 
-How to compile and run your program
-Assumptions made, if any
-Example input and output
-
 Compilation and Running Instructions:
-run with " ./myproject 64 16 input_sequence.txt" command, configure cache simulation as desired 
+run with " ./myproject 64 16 input_sequence.txt" command, configure cache simulation as desired (try different txts and cache/block sizes)
 add -lm when compiling flag to include math.h log functions
 
 Assumptions Made:
 Cache is direct-mapped, each line coresponds to one location in main memory (simple but miss prone)
 
-Example Input: 
+Example Input: (from input_sequence.txt)
 0
 4
 8
