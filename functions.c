@@ -38,15 +38,11 @@ Cache* create_cache(int cache_size, int block_size) {
  */
 int access_cache(Cache* cache, unsigned int address) {
 
-    int wordBits = 0, indexBits=0; 
-
-    //get word and index bits according to cache size 
-    wordBits = log2(cache->block_size); 
-    indexBits = log2(cache->num_lines); 
-
-
-    int index = (address >> wordBits) & ((1<<indexBits) -1); //remove block offset -> get just tag and index values
-    int tag = address >> (wordBits + indexBits); //extract tag (find where in memory to check for address)
+    //parse according PA2 calculation process outlines:
+    
+    int blockAddress = address / cache->block_size; //calculate block address
+    int index = blockAddress % cache->num_lines; //calculate index in cache
+    int tag = blockAddress / cache->num_lines; //calculate tag
 
     //check for a hit 
     if (cache->lines[index].valid && cache->lines[index].tag == tag){ //if valid (line has been used before) and tag matches block

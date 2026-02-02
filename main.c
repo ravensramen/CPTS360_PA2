@@ -2,10 +2,10 @@
 //Class: CPTS 360
 //Assignment: PA2 Cache simulator
 
-//Program takes in "addresses" in input_sequence.txt, each item represents
-//one byte in memory. Addresses are accessed one at a time, simulating access of cache blocks
+//Program takes in "addresses" in input_sequence.txt, simulates direct-mapped cache
+//First access creates cache line, subsequent accesses check if target item is in cache line (hit) or loads a new cache line if miss
 //Program outputs statistics of total accesses, cache hit/misses, and hit rate
-//Hardware specifics/cache configuration hard coded in program. 
+//Hardware specifics/cache configuration set in command line args 
 
 //This text file contains the main program, all user defined functions in header.h and functions.c
 #include "header.h"
@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     //cache config args
     int cache_size = atoi(argv[1]);   // total cache size
     int block_size = atoi(argv[2]);   // size of each cache block/line
-    char* filename = argv[3];
+    char* filename = argv[3]; //file name
 
     Cache* cache = create_cache(cache_size, block_size);
     if (cache == NULL) {
@@ -34,16 +34,17 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    unsigned int address; //store hex conversion of address from txt
+    unsigned int address; //address read from txt
     //variables for stats
     int accesses = 0;
     int hits = 0;
     int misses = 0;
 
     /* Read memory addresses from file */
-    while (fscanf(fp, "%d", &address) == 1) { //simulate loop to search for each memory address in cache
+    //use "%i" to read both hex and decimal values
+    while (fscanf(fp, "%i", &address) == 1) { //loop to search for each address in cache
         
-        printf("%d ", address); //for debugging
+        //printf("%d ", address); //for debugging
 
         accesses++; //increment accesses for stats
         if (access_cache(cache, address)) { //search for address in current cache
